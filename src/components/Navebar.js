@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import UseAdmin from "../hooks/UseAdmin";
 
 const Navebar = ({ children }) => {
+  const [dark, setDark] = useState(false);
+  const [admin] = UseAdmin();
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end" data-them={dark ? "dark" : "light"}>
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         <div className="w-full navbar bg-base-100 fixed top-0 px-20">
+          <label tabindex="0" class="btn btn-ghost" for="my-drawer-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h7"
+              />
+            </svg>
+          </label>
           <div className="flex-1 px-2 mx-2 text-2xl">Clean Co</div>
           <div className="flex-none lg:hidden">
             <label for="my-drawer-3" className="btn btn-square btn-ghost">
@@ -33,6 +52,13 @@ const Navebar = ({ children }) => {
                   Home
                 </NavLink>
               </li>
+              {admin && (
+                <li>
+                  <NavLink to="/dashboard" className="rounded-lg">
+                    Dashboard
+                  </NavLink>
+                </li>
+              )}
               <li>
                 <NavLink to="/about" className="rounded-lg">
                   About
@@ -74,7 +100,7 @@ const Navebar = ({ children }) => {
                 </ul>
               </li>
               <label class="swap swap-rotate">
-                <input data-toggle-theme="dark,light" type="checkbox" />
+                <input type="checkbox" onClick={() => setDark(!dark)} />
 
                 <svg
                   class="swap-on fill-current w-10 h-10"
@@ -147,6 +173,24 @@ const Navebar = ({ children }) => {
               </li>
             </ul>
           </li>
+          <div
+            tabindex="0"
+            class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"
+          >
+            <div class="collapse-title text-xl font-medium">Book Now</div>
+            <div class="collapse-content">
+              <li>
+                <NavLink to="/contact" className="rounded-lg">
+                  Quick Book
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/login" className="rounded-lg">
+                  Pre Book
+                </NavLink>
+              </li>
+            </div>
+          </div>
         </ul>
       </div>
     </div>
